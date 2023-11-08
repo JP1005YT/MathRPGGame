@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- <meta http-equiv="refresh" content="1" /> -->
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>MathRPGGame</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+<body>
+    <div class="mainMenu active">
+        <h1>Math RPG Game</h1>
+        <section>
+            <h3>Dificuldade:</h3>
+            <section id="selectDificuty">
+                <div id="diff-1">Fácil</div>
+                <div id="diff-2" class="active">Medio</div>
+                <div id="diff-3">Dificil</div>
+            </section>
+        </section>
+        <section>
+            <h3>Jogadores:</h3>
+            <section id="selectPlayers">
+                <div id="nump-1" class="active">1</div>
+                <div id="nump-2">2</div>
+                <div id="nump-3">3</div>
+                <div id="nump-3">4</div>
+            </section>
+        </section>
+        <button id="startGame">Play</button>
+    </div>
+    <div class="gameScreen"></div>
+    <script src='game.js'></script>
+</body>
+</html>

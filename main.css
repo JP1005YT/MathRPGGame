@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap');
+*{
+    font-family: 'Cherry Bomb One';
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+.gameScreen{
+    display: none;
+    position: relative;
+    width: 1500px;
+    height: 800px;
+    background: red;
+}
+.gameScreen.active{
+    display: block;
+}
+.mainMenu.active{
+    display: flex;
+}
+.mainMenu{
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    width: 50%;
+    height: 80%;
+    font-size: 40px;
+    border-radius: 35px;
+    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
+}
+.mainMenu > section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 90%;
+}
+.mainMenu > section section{
+    width: 100%;
+    text-align: center;
+    display: flex;
+}
+.mainMenu button{
+    width: 25%;
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border: none;
+    border-radius: 50px;
+    padding: 20px;
+    font-size: 60px;
+}
+.mainMenu button:hover{
+    cursor: pointer;
+    background: red;
+}
+.mainMenu > section section div{
+    user-select: none;
+    cursor: pointer;
+    width: 100%;
+    padding: 10px;
+    font-size: 55px;
+    margin:35px;
+    border-radius: 35px;
+    font-size: 30px;
+}
+.mainMenu > section section div.active{
+    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
+}
+#enemy{
+    position: absolute;
+    right: 0px;
+    margin-right: 150px;
+    top: calc(50% - 75px);
+    width: 125px;
+    height: 150px;
+    background: blue;
+}
