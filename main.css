@@ -9,15 +9,32 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 100vw;
     height: 100vh;
+    background: pink;
 }
 .gameScreen{
     display: none;
     position: relative;
     width: 1500px;
-    height: 800px;
-    background: red;
+    height: 600px;
+    background: pink;
+}
+.gameActions{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    display: none;
+    width: 100%;
+    height: 400px;
+    background: orange;
+    border: 1px solid black;
+}
+.gameActions.active{
+    display: flex;
 }
 .gameScreen.active{
     display: block;
@@ -35,6 +52,7 @@ body{
     font-size: 40px;
     border-radius: 35px;
     box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
+    background: #fff;
 }
 .mainMenu > section{
     display: flex;
@@ -76,12 +94,97 @@ body{
 .mainMenu > section section div.active{
     box-shadow: 5px 0 25px rgba(0, 0, 0, 0.3);
 }
-#enemy{
+#boss{
     position: absolute;
     right: 0px;
     margin-right: 150px;
-    top: calc(50% - 75px);
+    top: calc(50% - 95px);
+    width: 125px;
+    height: 150px;
+    background: skyblue;
+}
+#player1{
+    position: absolute;
+    left: 50px;
+    margin-right: 150px;
+    top: calc(50% - 300px);
     width: 125px;
     height: 150px;
     background: blue;
+}
+#player2{
+    position: absolute;
+    left: 0;
+    margin-right: 150px;
+    top: calc(50% - 110px);
+    width: 125px;
+    height: 150px;
+    background: purple;
+}
+#player3{
+    position: absolute;
+    left: 220px;
+    margin-right: 150px;
+    top: 50px;
+    width: 125px;
+    height: 150px;
+    background: green;
+}
+#player4{
+    position: absolute;
+    left: 170px;
+    margin-right: 150px;
+    top: calc(50%  - 70px);
+    width: 125px;
+    height: 150px;
+    background: purple;
+}
+.lifeBar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -50px;
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    background: red;
+    border: 1px solid black;
+}
+.lifeBar div{
+    left: 0;
+    z-index: 0;
+    position: absolute;
+    height: 100%;
+    background: green;
+}
+.lifeBar span{
+    z-index: 99;
+    position: absolute;
+}
+
+.gameActions .turnDiv{
+    top: 0;
+    left: 0;
+    position: absolute;
+    font-size: 35px;
+    padding: 10px;
+}
+.gameActions .balance{
+    overflow: hidden;
+    position: relative;
+    width: 80%;
+    height: 70%;
+    background: black;
+    border-radius: 25px;
+}
+.gameActions .balance .line{
+    position: absolute;
+    width: 20px;
+    height: 100%;
+    background: #fff;
+}
+.gameActions .balance .bonusArea{
+    position: absolute;
+    height: 100%;
+    background: green;
 }
