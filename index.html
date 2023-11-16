@@ -36,9 +36,22 @@
             Vez de:
             <span class="turnOF"></span>
         </span>
+        <span class="damageBost">
+            Dano:
+            <span class="damageBoostText"></span>
+        </span>
+        <div class="actionSelect active">
+            <h2>Selecione seu ataque:</h2>
+            <span onclick="actionSelect(0)">Primario</span>
+            <span onclick="actionSelect(1)">Secundario</span>
+            <span onclick="actionSelect(2)">Medium</span>
+        </div>
         <div class="balance">
             <div class="line"></div>
             <div class="bonusArea"></div>
+        </div>
+        <div class="operationScreen">
+            <span class="equation"></span>
         </div>
     </div>
     <script src='game.js'></script>

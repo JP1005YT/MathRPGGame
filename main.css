@@ -169,7 +169,15 @@ body{
     font-size: 35px;
     padding: 10px;
 }
+.gameActions .damageBost{
+    top: 0;
+    right: 0;
+    position: absolute;
+    font-size: 35px;
+    padding: 10px;
+}
 .gameActions .balance{
+    display: none;
     overflow: hidden;
     position: relative;
     width: 80%;
@@ -177,14 +185,104 @@ body{
     background: black;
     border-radius: 25px;
 }
+.balance.active{
+    display: block;
+}
 .gameActions .balance .line{
     position: absolute;
     width: 20px;
     height: 100%;
-    background: #fff;
+    background: red;
+    z-index: 99;
 }
 .gameActions .balance .bonusArea{
     position: absolute;
     height: 100%;
     background: green;
+    z-index: 98;
+}
+.actionSelect{
+    display: none;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 80%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
+}
+.actionSelect.active{
+    display: flex;
+}
+.actionSelect h2{
+    font-size: 35px;
+    width: 100%;
+    text-align: center;
+}
+.actionSelect span{
+    transition: 300ms;
+    font-size: 35px;
+    padding: 20px;
+    margin: 20px;
+}
+.actionSelect span:hover{
+    cursor: pointer;
+    font-size: 40px;
+}
+.operationScreen{
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 80%;
+    height: 65%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
+}
+.operationScreen.active{
+    display: flex;
+}
+.operationScreen .equation{
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.operationScreen .equation .drop-area{
+    margin: 0 10px 0 10px;
+    width: 70px;
+    height: 70px;
+    background: red;
+    border-radius: 50%;
+}
+.operationScreen .equation .drop-area-e{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px 0 10px;
+    width: 30px;
+    height: 30px;
+    background: red;
+    border-radius: 50%;
+    transform: translateX(-20px) translateY(-30px);
+}
+.operationScreen .equation .drop-area-e .opcs{
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+    /* background: yellow; */
+}
+.operationScreen .opcs{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    font-size: 40px;
+}
+
+.operationScreen .opcs:hover{
+    cursor: move;
 }
