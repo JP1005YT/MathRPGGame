@@ -1,7 +1,18 @@
 const Game_Screen = document.querySelector(".gameScreen")
-let turnOff = 'player1'
+const displayTurnOff = document.querySelector(".turnOF")
+const lineOfBalance = document.querySelector(".line")
+const bonus = document.querySelector(".bonusArea")
+let turnOff = 0
 let Characters = {}
+let balanceIsAtivo = false
+let presets
+let percent = 30
+let finalDamage
+let danoAcumulado, bonusDamage = 0
+let contDamageBalance = 0
+let operationLv
 
+// Tela Principal Funções dos Botões
 document.querySelectorAll(".mainMenu > section section").forEach( BoxEscolhas => {
     BoxEscolhas.querySelectorAll("div").forEach( div => {
         let OneActive = false
@@ -15,60 +26,17 @@ document.querySelectorAll(".mainMenu > section section").forEach( BoxEscolhas =>
         })
     })
 })
-
 document.querySelector("#startGame").addEventListener("click",() => {
     const divsActive = document.querySelectorAll(".mainMenu > section section div.active")
-    const presets = {
+    presets = {
         "dificultyLevel" :  divsActive[0].innerHTML,
         "playerNumber" :  divsActive[1].innerHTML,
     }
     startGame(presets)
 })
 
-function changeScreen(screenIn,screenOut){
-    if(screenIn){
-        document.querySelector(`.${screenIn}`).classList.remove('active')
-    }
-    if(screenOut){
-        document.querySelector(`.${screenOut}`).classList.add('active')
-    }
-}
 
-function startGame(presets){
-    changeScreen("mainMenu","gameScreen")
-    changeScreen("", "gameActions")
-    let i = 0
-    while(presets.playerNumber > i){
-        let player = document.createElement("div")
-        player.setAttribute("class",`player num_${i + 1}`)
-        player.setAttribute("id",`num_${i + 1}`)
-        Characters[`player${i + 1}`] = {
-            "obj" : document.createElement("div"),
-            "maxHealth" : 100,
-            "health" : 100
-        }
-        i++
-    }
-    Characters["boss"] = {
-        "obj" : document.createElement("div"),
-        "health" : 300 * presets.playerNumber,
-        "maxHealth" : 300 * presets.playerNumber
-    }
-    for(let person in Characters){
-        Characters[person]['obj'].setAttribute('id',person)
-        Characters[person]['obj'].setAttribute('class','gameObj')
-        Game_Screen.appendChild(Characters[person]['obj'])
-    }
-    HealthBar(true)
-    TurnStart()
-}
-
-let damageBalance
-function TurnStart(){
-    document.querySelector(".turnOF").innerHTML = turnOff
-    // damageBalance = true
-    bonusArea()
-}
+// Funções Auxiliares
 
 function HealthBar(){
     for(let obj in Characters){
@@ -81,7 +49,16 @@ function HealthBar(){
         lifeBar.innerHTML = `<span>${Characters[obj]["health"]}/${Characters[obj]["maxHealth"]}<span>`
         lifeBar.appendChild(life)
         document.querySelector(`#${obj}`).appendChild(lifeBar)
-        }
+    }
+}
+
+function changeScreen(screenIn,screenOut){
+    if(screenIn){
+        document.querySelector(`.${screenIn}`).classList.remove('active')
+    }
+    if(screenOut){
+        document.querySelector(`.${screenOut}`).classList.add('active')
+    }
 }
 
 function ModifyLife(target,amount,type){
@@ -111,96 +88,161 @@ function ModifyLife(target,amount,type){
     HealthBar()
 }
 
-let percent = 30
-function bonusArea(){
-    let bonus = document.querySelector(".bonusArea")
-    if(percent > 2){
-        percent = 30 - (bonusDamage * 2)
+// Funções do Jogo
+
+// Começa o Jogo
+
+function startGame(presets){
+    changeScreen("mainMenu","gameScreen")
+    changeScreen("", "gameActions")
+    let i = 0
+    while(presets.playerNumber > i){
+        let player = document.createElement("div")
+        player.setAttribute("class",`player num_${i + 1}`)
+        player.setAttribute("id",`num_${i + 1}`)
+        Characters[`player${i + 1}`] = {
+            "obj" : document.createElement("div"),
+            "maxHealth" : 100,
+            "health" : 100
+        }
+        i++
     }
+    Characters["boss"] = {
+        "obj" : document.createElement("div"),
+        "health" : 300 * presets.playerNumber,
+        "maxHealth" : 300 * presets.playerNumber
+    }
+    for(let person in Characters){
+        Characters[person]['obj'].setAttribute('id',person)
+        Characters[person]['obj'].setAttribute('class','gameObj')
+        Game_Screen.appendChild(Characters[person]['obj'])
+    }
+    HealthBar()
+    turnStart()
+}
+
+// Primeiro Turno
+function turnStart(){
+    displayTurnOff.innerHTML = Object.keys(Characters)[turnOff]
+    genBonusArea()
+}
+
+function actionSelect(selected){
+    document.querySelector(".balance").classList.toggle("active")
+    document.querySelector(".actionSelect").classList.toggle("active")
+    balanceBar()
+    resetThisFuck()
+    balanceIsAtivo = true
+    operationLv = selected
+}
+
+function genBonusArea(){
+    if(percent > 2){
+            percent = 30 - (bonusDamage * 2)
+        }
     bonus.style.width = percent + '%'
     bonus.style.left = Math.floor(Math.random() * (100 - percent )) + "%"
     bonusDamage++
-    let finalDamage = 40 + (bonusDamage * 10)
+    finalDamage = 40 + (bonusDamage * 10)
     document.querySelector(".damageBoostText").innerHTML = finalDamage + '%'
-    reset = true
+    lineGoesReset = true
 }
 
-let danoAcumulado, bonusDamage = 0
-let reset = true
-let contDamageBalance = 0
-let reverse
 
-setInterval(()=>{ 
-    if(damageBalance){
-        if(contDamageBalance === 100){
-            if(reset){
-                reset = false
-                reverse = true
-                document.querySelector(".line").style.background = 'white'
+let positionOfLine = 0
+let lineDirectionIsBack = false
+let lineGoesReset = false
+function balanceBar(){
+    if(balanceIsAtivo){
+        if(lineDirectionIsBack === true){
+            positionOfLine = positionOfLine - 1
+        }else{
+            positionOfLine = positionOfLine + 1
+        }
+        if(positionOfLine === 0){
+            lineDirectionIsBack = false
+        }
+        if(positionOfLine === 100){
+            if(lineGoesReset){
+                lineDirectionIsBack = true
+                lineGoesReset = false
             }else{
-                document.querySelector(".line").style.left = "0%"
-                damageBalance = false
-                percent = 30
-                document.querySelector(".balance").classList.toggle("active")
+                balanceIsAtivo = false
                 runMathOperation()
+                document.querySelector(".balance").classList.toggle("active")
             }
         }
-        if(contDamageBalance === 0){
-                document.querySelector(".line").style.background = 'red'
-            reverse = false
-            reset = false
-        }
-        if(reverse){
-            document.querySelector(".line").style.left = contDamageBalance + "%"
-            contDamageBalance--
-        }else{
-            document.querySelector(".line").style.left = contDamageBalance + "%"
-            contDamageBalance++
-        }
+        lineOfBalance.style.left = positionOfLine + "%"
     }
-},10)
+}
+
+function resetThisFuck(){
+    bonusDamage = 0
+    percent = 30
+    positionOfLine = 0
+    balanceIsAtivo = true
+    genBonusArea()
+}
+
+setInterval(balanceBar, 10)
 
 addEventListener("keydown",(e) => {
     if(e.key === " "){
         let d1 = parseInt(document.querySelector(".bonusArea").style.left.slice(0,-1))
         let d2 = d1 + parseInt(document.querySelector(".bonusArea").style.width.slice(0,-1))
-        let d3 = parseInt(document.querySelector(".line").style.left.slice(0,-1))
-        if(d3 >= d1 && d3 <= d2 && reverse === false){
-            document.querySelector(".line").style.background = 'blue'
-            bonusArea()
+        let d3 = parseInt(lineOfBalance.style.left.slice(0,-1))
+        if(d3 >= d1 && d3 <= d2 && lineDirectionIsBack === false){
+            lineOfBalance.style.background = 'blue'
+            genBonusArea()
         }
     }
-})
-
-let mathGround
-function actionSelect(selected){
-    document.querySelector(".balance").classList.toggle("active")
-    document.querySelector(".actionSelect").classList.toggle("active")
-    damageBalance = true
-    mathGround = selected
-}
+} )
 
 let operacoes,numeros
 function runMathOperation(){
     document.querySelector(".operationScreen").classList.toggle("active")
     let divEquation = document.querySelector(".equation")
     let divOpScreen = document.querySelector(".operationScreen")
-    switch (mathGround) {
+    switch  (operationLv) {
         case 0:
-            operacoes = ["x","/","+","-"]
-            numeros = [0,1,2,3,4,5,6,7,8,9]
-            
+            switch (presets.dificultyLevel) {
+                case "Fácil":
+                    operacoes = ["x","/","+","-"]
+                    numeros = [1,2,3,4,5,6,7,8,9,10]
+                    break;
+                case "Medio":
+                    operacoes = ["x","/","+","-"]
+                    numeros = [1,2,3,4,5,6,7,8,9,10]
+                    break;
+                case "Dificil":
+                    operacoes = ["x","/","+","-"]
+                    numeros = [ 1,2,3,4,5]
+                    break;
+            }
         break;
         case 1:
-            operacoes = ["x","/","+","-","**","%+"]
-            numeros = [0,1,2,3,4,5,6,7,8,9]
+            operacoes = ["x","/","+","-","**","+%"]
+            numeros = [1,2,3,4] 
         break;
         case 2:
             
             break;
     }
     let lastOp
-    let numeroDeNumeros = Math.floor(Math.random() * 5) + 2
+    let numeroDeNumeros
+
+    switch (presets.dificultyLevel) {
+        case "Fácil":
+            numeroDeNumeros = Math.floor(Math.random() * 2) + 2
+            break;
+        case "Medio":
+            numeroDeNumeros = Math.floor(Math.random() * 3) + 2
+            break;
+        case "Dificil":
+            numeroDeNumeros = Math.floor(Math.random() * 6) + 2
+            break;
+    }
+
     for(let i = 0; i < numeroDeNumeros; i++){
         let dropArea = document.createElement("div")
         if(lastOp === "**"){
@@ -218,7 +260,8 @@ function runMathOperation(){
             spanOperator.innerHTML = operacoes[operadorIndex]
             lastOp = operacoes[operadorIndex]
             if(lastOp === "**"){
-
+                spanOperator.style.display = 'none'
+                divEquation.appendChild(spanOperator)
             }else{
                 divEquation.appendChild(spanOperator)
             }
@@ -254,12 +297,27 @@ function onDrop(event) {
 }
 
 function realiseMath(){
+    document.querySelector(".operationScreen").classList.toggle("active")
     let math = document.querySelectorAll(".equation span")
     let str = ''
     math.forEach( ele => {
         str += ele.innerHTML
     })
-    console.log(str)
+    let result = Math.ceil(calcularExpressaoString(str));
+
+    if(result < 0){
+        result = Math.abs(result)
+    }
+    
+    result = (finalDamage * result) / 100
+
+    result = Math.ceil(result)
+
+    console.log(str,result)
+
+    ModifyLife('boss',result,'damage')
+
+    NextTurn()
 }
 
 function calcularExpressaoString(expressao) {
@@ -272,11 +330,11 @@ function calcularExpressaoString(expressao) {
             case '+':
             case '-':
                 return 1;
-            case '*':
+            case 'x':
             case '/':
+            case '+%':
                 return 2;
             case '**':
-            case '+%':
                 return 3; // Elevado e Mais Porcentagem têm a maior precedência
             default:
                 return 0;
@@ -296,7 +354,7 @@ function calcularExpressaoString(expressao) {
             case '-':
                 numeros.push(a - b);
                 break;
-            case '*':
+            case 'x':
                 numeros.push(a * b);
                 break;
             case '/':
@@ -345,7 +403,22 @@ function calcularExpressaoString(expressao) {
     return numeros[0];
 }
 
-// Exemplo de uso
-let expressao = "123+500";
-let resultado = calcularExpressaoString(expressao);
-console.log(`${expressao} = ${resultado}`);
+function NextTurn(){
+    let numTurns = Object.keys(Characters).length - 1
+    document.querySelector(".equation").innerHTML = ""
+
+    if(turnOff == numTurns){
+        turnOff = 0
+    }else{
+        turnOff += 1
+    }
+
+    if(Object.keys(Characters)[turnOff] === "boss"){
+        BossAtack()
+    }else{
+        document.querySelector(".actionSelect").classList.toggle("active")
+    }
+
+    document.querySelector(".turnOF").innerHTML = Object.keys(Characters)[turnOff]
+}
+
