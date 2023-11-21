@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap');
 *{
+    user-select: none;
     font-family: 'Cherry Bomb One';
     padding: 0;
     margin: 0;
@@ -12,14 +13,13 @@ body{
     flex-direction: column;
     width: 100vw;
     height: 100vh;
-    background: pink;
+    background: url('/3665587.jpg');
 }
 .gameScreen{
     display: none;
     position: relative;
     width: 1500px;
     height: 600px;
-    background: pink;
 }
 .gameActions{
     display: flex;
@@ -285,4 +285,21 @@ body{
 
 .operationScreen .opcs:hover{
     cursor: move;
+}
+
+.damageProp{
+    color: red;
+    position: absolute;
+    font-size: 17px;
+    animation: prop 2s;
+}
+@keyframes prop {
+    0%{
+        top: 0;
+        font-size: 17px;
+    }
+    100%{
+        top: -100px;
+        font-size: 22px;
+    }
 }
