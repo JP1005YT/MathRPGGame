@@ -34,6 +34,12 @@ document.querySelector("#startGame").addEventListener("click",() => {
         "playerNumber" :  divsActive[1].innerHTML,
     }
     startGame(presets)
+    var audio = new Audio('theme.mp3');
+    audio.addEventListener('canplaythrough', function() {
+        audio.play();
+        audio.volume = 0.09
+    });
+    document.querySelector("body").style.background = 'url("bgnl.png")'
 })
 
 
@@ -284,10 +290,7 @@ function runMathOperation(){
                     break;
             }
             
-        break;
-        case 2:
-            
-            break;
+        break;  
     }
     let lastOp
     let numeroDeNumeros
@@ -499,10 +502,13 @@ function BossAtack(){
         let bossDamage = calcularExpressaoString(conta)
         console.log(conta,bossDamage)
         if(bossDamage < 0){
-        bossDamage =  Math.abs(bossDamage)
+            bossDamage =  Math.abs(bossDamage)
         }
+        let DamagePerPlayer = bossDamage / presets.playerNumber
         setTimeout(()=>{
-            ModifyLife('player1',bossDamage,'damage')
+            for(let i = 1;i <= presets.playerNumber;i++){
+                ModifyLife(`player${i}`,DamagePerPlayer,'damage')
+            }
             NextTurn()
         },2000)
     }

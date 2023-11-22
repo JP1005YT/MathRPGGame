@@ -5,6 +5,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    object-fit: fill;
 }
 body{
     display: flex;
@@ -13,7 +14,7 @@ body{
     flex-direction: column;
     width: 100vw;
     height: 100vh;
-    background: url('/3665587.jpg');
+    background: url('/bg.jpg');
 }
 .gameScreen{
     display: none;
@@ -30,8 +31,10 @@ body{
     display: none;
     width: 100%;
     height: 400px;
-    background: orange;
+    background: url('/Madeira.jpg');
+    background-size: 100%;
     border: 1px solid black;
+    color: #fff;
 }
 .gameActions.active{
     display: flex;
@@ -79,7 +82,8 @@ body{
 }
 .mainMenu button:hover{
     cursor: pointer;
-    background: red;
+    padding: 25px;
+    background: #ccc;
 }
 .mainMenu > section section div{
     user-select: none;
@@ -101,7 +105,8 @@ body{
     top: calc(50% - 95px);
     width: 125px;
     height: 150px;
-    background: skyblue;
+    background: url("BOSS.png");
+    background-size: 100%;
 }
 #player1{
     position: absolute;
@@ -109,8 +114,10 @@ body{
     margin-right: 150px;
     top: calc(50% - 300px);
     width: 125px;
-    height: 150px;
-    background: blue;
+    height: 165px;
+    background: url("PLAYER1.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 #player2{
     position: absolute;
@@ -119,7 +126,9 @@ body{
     top: calc(50% - 110px);
     width: 125px;
     height: 150px;
-    background: purple;
+    background: url("PLAYER2.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 #player3{
     position: absolute;
@@ -128,7 +137,9 @@ body{
     top: 50px;
     width: 125px;
     height: 150px;
-    background: green;
+    background: url("PLAYER3.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 #player4{
     position: absolute;
@@ -137,7 +148,9 @@ body{
     top: calc(50%  - 70px);
     width: 125px;
     height: 150px;
-    background: purple;
+    background: url("PLAYER4.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 .lifeBar{
     display: flex;
@@ -202,6 +215,7 @@ body{
     z-index: 98;
 }
 .actionSelect{
+    
     display: none;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -216,8 +230,13 @@ body{
     font-size: 35px;
     width: 100%;
     text-align: center;
+    color: #fff;
 }
 .actionSelect span{
+    background: url('/Madeira.jpg');
+    background-size: 100%;
+    box-shadow: 0 0 10px black;
+    color: #fff;
     transition: 300ms;
     font-size: 35px;
     padding: 20px;
@@ -252,7 +271,8 @@ body{
     margin: 0 10px 0 10px;
     width: 70px;
     height: 70px;
-    background: red;
+    background: white;
+    box-shadow: 0 0 10px black inset;
     border-radius: 50%;
 }
 .operationScreen .equation .drop-area-e{
@@ -262,7 +282,8 @@ body{
     margin: 0 10px 0 10px;
     width: 30px;
     height: 30px;
-    background: red;
+    background: white;
+    box-shadow: 0 0 10px black inset;
     border-radius: 50%;
     transform: translateX(-20px) translateY(-30px);
 }
@@ -277,6 +298,7 @@ body{
     justify-content: center;
     align-items: center;
     background: #fff;
+    color: #000;
     border-radius: 50%;
     width: 70px;
     height: 70px;
