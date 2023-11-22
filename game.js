@@ -34,7 +34,7 @@ document.querySelector("#startGame").addEventListener("click",() => {
         "playerNumber" :  divsActive[1].innerHTML,
     }
     startGame(presets)
-    var audio = new Audio('theme.mp3');
+    var audio = new Audio('assets/theme.mp3');
     audio.addEventListener('canplaythrough', function() {
         audio.play();
         audio.volume = 0.09
